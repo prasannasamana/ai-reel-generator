@@ -153,75 +153,26 @@ git status
 
 **You should see** files listed as "Changes to be committed" (in green)
 
-### Step 2.6: Create .gitignore (if not exists)
+### Step 2.6: Verify .gitignore Exists
 
 **Check if .gitignore exists:**
 ```bash
 dir .gitignore
 ```
 
-**If it doesn't exist**, create it:
-```bash
-notepad .gitignore
-```
+**✅ If you see `.gitignore` file:**
+- Great! Your `.gitignore` is already set up correctly
+- It includes Python, Django, environment files, IDE, and OS ignores
+- **Skip to Step 2.7** (no need to create it)
 
-**Paste this content:**
-```
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Django
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-/media
-/staticfiles
-
-# Environment
-.env
-.env.local
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
-```
-
-**Save and close** Notepad
-
-**Add .gitignore:**
-```bash
-git add .gitignore
-```
+**❌ If you see "File not found":**
+- Create it:
+  ```bash
+  notepad .gitignore
+  ```
+- Copy the content from your existing `.gitignore` file (it's already perfect!)
+- Save and close Notepad
+- Then run: `git add .gitignore`
 
 ### Step 2.7: Make Initial Commit
 
