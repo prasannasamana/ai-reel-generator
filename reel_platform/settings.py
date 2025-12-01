@@ -115,6 +115,14 @@ SADTALKER_ROOT = os.getenv('SADTALKER_ROOT', '/workspace/SadTalker')
 # Backend base URL (for constructing video URLs)
 BACKEND_BASE_URL = os.getenv('BACKEND_BASE_URL', 'http://localhost:8000')
 
+# Runpod Serverless configuration
+USE_RUNPOD = os.getenv('USE_RUNPOD', 'false').lower() == 'true'
+RUNPOD_ENDPOINT_URL = os.getenv('RUNPOD_ENDPOINT_URL', '')
+RUNPOD_API_KEY = os.getenv('RUNPOD_API_KEY', '')
+
+# Async processing (returns immediately, processes in background)
+ASYNC_PROCESSING = os.getenv('ASYNC_PROCESSING', 'false').lower() == 'true'
+
 # Django REST Framework configuration
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

@@ -1,0 +1,41 @@
+FROM python:3.10-slim
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libglib2.0-0 \
+    wget \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Install Python dependencies
+# Note: OpenAI TTS is done in Django, not here
+# This container only needs SadTalker dependencies (installed via SadTalker requirements.txt)
+RUN pip install --no-cache-dir requests>=2.31.0
+
+# Clone SadTalker
+ARG SADTALKER_ROOT=/workspace/SadTalker
+ENV SADTALKER_ROOT=${SADTALKER_ROOT}
+RUN mkdir -p /workspace && \
+    cd /workspace && \
+    git clone https://github.com/OpenTalker/SadTalker.git && \
+    cd SadTalker && \
+    pip install -r requirements.txt
+
+# Download SadTalker models
+RUN cd ${SADTALKER_ROOT} && \
+    bash scripts/download_models.sh || echo "Model download may need manual execution"
+
+# Copy handler script
+COPY runpod_handler.py /app/handler.py
+
+# The handler will be called by Runpod Serverless runtime
+# No need for CMD - Runpod calls handler.handler function directly
+

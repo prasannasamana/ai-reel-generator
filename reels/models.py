@@ -6,7 +6,9 @@ from django.utils import timezone
 class ReelJob(models.Model):
     STATUS_CHOICES = [
         ('pending', 'pending'),
-        ('processing', 'processing'),
+        ('script_pending_approval', 'script_pending_approval'),  # Waiting for user to approve script
+        ('script_approved', 'script_approved'),  # Script approved, ready for processing
+        ('processing', 'processing'),  # Generating audio/video
         ('done', 'done'),
         ('error', 'error'),
     ]
@@ -16,15 +18,16 @@ class ReelJob(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     original_script = models.TextField()
-    final_script = models.TextField(blank=True, null=True)
+    final_script = models.TextField(blank=True, null=True)  # Approved script (after user approval)
     tone = models.CharField(max_length=50, default='neutral')
+    script_approved = models.BooleanField(default=False)  # Whether user approved the script
     
     image = models.ImageField(upload_to='reels/images/')
     audio_file = models.FileField(upload_to='reels/audio/', null=True, blank=True)
     video_file = models.FileField(upload_to='reels/video/', null=True, blank=True)
     
     status = models.CharField(
-        max_length=20,
+        max_length=25,  # Increased to accommodate 'script_pending_approval' (23 chars)
         choices=STATUS_CHOICES,
         default='pending'
     )
