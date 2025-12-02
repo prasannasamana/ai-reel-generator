@@ -36,6 +36,9 @@ RUN cd ${SADTALKER_ROOT} && \
 # Copy handler script
 COPY runpod_handler.py /app/handler.py
 
+# Set PYTHONPATH to ensure handler can be imported
+ENV PYTHONPATH=/app:${PYTHONPATH}
+
 # The handler will be called by Runpod Serverless runtime
-# No need for CMD - Runpod calls handler.handler function directly
+# Handler path: handler.handler (file: handler.py, function: handler)
 
